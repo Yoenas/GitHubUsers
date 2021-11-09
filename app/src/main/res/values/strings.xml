@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">GitHub Users</string>
+    <string name="txt_repositories">Repositories</string>
+    <string name="txt_followers">Followers</string>
+    <string name="txt_following">Following</string>
+    <string name="content_img_company">Image For Icon Company</string>
+    <string name="content_img_location">Image For Icon Location</string>
+    <string name="content_img_repositories">Image For Icon Repositories</string>
+    <string name="content_img_follow">Image For Icon Followers And Following</string>
+    <string name="transition_name_avatar">profile_avatar</string>
+    <string name="transition_name_username">profile_username</string>
+    <string name="transition_name_company">profile_company</string>
+    <string name="txt_share">Share</string>
+    <string name="txt_share_to">Share GitHub User Profile to..</string>
+    <string name="txt_title_detail">Detail GitHub User</string>
+</resources>
