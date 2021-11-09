@@ -9,5 +9,5 @@ I learn to built this app from Dicoding BFAA
 - Android Sharesheet
 
 This is my outcome from Submission 1
-| <img src="/images/ss1_1.png" width="25%"/> | <img src="/images/ss1_2.png" width="25%"/> | <img src="/images/ss1_3.png" width="25%"/> | <img src="/images/ss1_4.png" width="25%"/> |
-| :---: | :---: | :---: | :--: |
+| <img src="/images/sub1_0.png"/> | <img src="/images/sub1_1.jpg"/> | <img src="/images/sub1_2.jpg"/> | <img src="/images/sub1_3.jpg" /> | <img src="/images/sub1_4.jpg"/> |
+| :---: | :---: | :---: | :---: | :--: |
