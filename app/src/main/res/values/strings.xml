@@ -21,4 +21,5 @@
     <string name="transition_name_company">profile_company</string>
     <string name="txt_search_progress">Please wait! Looking For</string>
     <string name="txt_dialog_information">GitHub users will show up after using\nSearch Person Menu</string>
+    <string name="content_button_favorite">Button Favorite</string>
 </resources>

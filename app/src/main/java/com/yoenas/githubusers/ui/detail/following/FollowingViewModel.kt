@@ -1,10 +1,10 @@
-package com.yoenas.githubusers.ui.following
+package com.yoenas.githubusers.ui.detail.following
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.yoenas.githubusers.data.User
+import com.yoenas.githubusers.data.model.User
 import com.yoenas.githubusers.network.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback

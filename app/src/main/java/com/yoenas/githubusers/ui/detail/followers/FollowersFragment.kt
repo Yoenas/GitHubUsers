@@ -1,4 +1,4 @@
-package com.yoenas.githubusers.ui.following
+package com.yoenas.githubusers.ui.detail.followers
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,26 +8,25 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yoenas.githubusers.adapter.UserAdapter
-import com.yoenas.githubusers.databinding.FragmentFollowingBinding
+import com.yoenas.githubusers.databinding.FragmentFollowersBinding
 import com.yoenas.githubusers.ui.detail.DetailActivity
 
-class FollowingFragment : Fragment() {
+class FollowersFragment : Fragment() {
 
-    private lateinit var followingViewModel: FollowingViewModel
+    private lateinit var followersViewModel: FollowersViewModel
     private lateinit var username: String
 
-    private var _binding: FragmentFollowingBinding? = null
+    private var _binding: FragmentFollowersBinding? = null
 
-    private val binding get() = _binding as FragmentFollowingBinding
+    private val binding get() = _binding as FragmentFollowersBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentFollowingBinding.inflate(layoutInflater)
-        followingViewModel = ViewModelProvider(this).get(FollowingViewModel::class.java)
+        _binding = FragmentFollowersBinding.inflate(layoutInflater)
+        followersViewModel = ViewModelProvider(this)[FollowersViewModel::class.java]
         username = arguments?.getString(DetailActivity.EXTRA_DATA_USERNAME).toString()
-
         showLoading(true)
         return binding.root
     }
@@ -35,10 +34,10 @@ class FollowingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        followingViewModel.getUserFollowing(username)
-        followingViewModel.getResultFollowing().observe(viewLifecycleOwner, {
+        followersViewModel.getUserFollower(username)
+        followersViewModel.getResultFollowers().observe(viewLifecycleOwner, {
             if (it != null) {
-                binding.rvFollowing.apply {
+                binding.rvFollowers.apply {
                     layoutManager = LinearLayoutManager(activity)
                     adapter = UserAdapter(it)
                     showLoading(false)
@@ -56,10 +55,10 @@ class FollowingFragment : Fragment() {
         binding.apply {
             if (loading) {
                 progressBar.visibility = View.VISIBLE
-                rvFollowing.visibility = View.GONE
+                rvFollowers.visibility = View.GONE
             } else {
                 progressBar.visibility = View.GONE
-                rvFollowing.visibility = View.VISIBLE
+                rvFollowers.visibility = View.VISIBLE
             }
         }
     }

@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.yoenas.githubusers.R
-import com.yoenas.githubusers.data.User
+import com.yoenas.githubusers.data.model.User
 import com.yoenas.githubusers.databinding.RowItemUserBinding
 import com.yoenas.githubusers.utils.OnItemClickCallback
 

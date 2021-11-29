@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
 import com.yoenas.githubusers.R
 import com.yoenas.githubusers.adapter.SectionPagerAdapter
-import com.yoenas.githubusers.data.DetailUser
+import com.yoenas.githubusers.data.model.DetailUser
 import com.yoenas.githubusers.databinding.ActivityDetailBinding
 
 class DetailActivity : AppCompatActivity() {
@@ -33,10 +33,9 @@ class DetailActivity : AppCompatActivity() {
         }
 
         val username = intent.getStringExtra(EXTRA_DATA_USERNAME)
-
         saveDataUser.putString(EXTRA_DATA_USERNAME, username)
 
-        detailViewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
+        detailViewModel = obtainViewModel(this)
         detailViewModel.getUser(username!!)
         detailViewModel.getUserDetails().observe(this) {
             this.dataUser = it
@@ -44,8 +43,12 @@ class DetailActivity : AppCompatActivity() {
             if (it != null) {
                 initView()
             }
-
         }
+    }
+
+    private fun obtainViewModel(activity: AppCompatActivity): DetailViewModel {
+        val factory = ViewModelFactory.getInstance(activity.application)
+        return ViewModelProvider(activity, factory)[DetailViewModel::class.java]
     }
 
     private fun initView() {
@@ -63,7 +66,20 @@ class DetailActivity : AppCompatActivity() {
                 tvRepositaryDetail.text = publicRepos.toString()
                 tvFollowersDetail.text = followers.toString()
                 tvFollowingDetail.text = following.toString()
+
+                detailViewModel.showFavoriteUser(this)
+                fabFavorite.setOnClickListener {
+                    detailViewModel.checkFavoriteUser(this)
+                }
             }
+
+            detailViewModel.isFavorite.observe(this@DetailActivity, { isFav ->
+                if (isFav) {
+                    fabFavorite.setImageResource(R.drawable.ic_favorite_full)
+                } else {
+                    fabFavorite.setImageResource(R.drawable.ic_favorite_border)
+                }
+            })
 
             vpFollow.adapter = SectionPagerAdapter(this@DetailActivity, saveDataUser)
             TabLayoutMediator(tabs, vpFollow) { tab, position ->
@@ -94,10 +110,9 @@ class DetailActivity : AppCompatActivity() {
         dataUser.apply {
             val textValue = "This is $name's GitHub Profile\n" +
                     "Username: $login\n" +
+                    "Email: $email\n" +
                     "Company: $company\n" +
                     "Location: $location\n" +
-                    "Total $publicRepos Repositories\n" +
-                    "$followers Followers & $following Following\n" +
                     "Visit link $htmlUrl"
 
             val sendIntent: Intent = Intent().apply {

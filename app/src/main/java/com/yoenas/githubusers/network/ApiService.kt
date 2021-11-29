@@ -1,9 +1,9 @@
 package com.yoenas.githubusers.network
 
 import com.yoenas.githubusers.BuildConfig.API_KEY
-import com.yoenas.githubusers.data.DetailUser
-import com.yoenas.githubusers.data.GitHubUsers
-import com.yoenas.githubusers.data.User
+import com.yoenas.githubusers.data.model.DetailUser
+import com.yoenas.githubusers.data.model.GitHubUsers
+import com.yoenas.githubusers.data.model.User
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Headers

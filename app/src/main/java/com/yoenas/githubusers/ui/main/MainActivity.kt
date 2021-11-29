@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.yoenas.githubusers.R
 import com.yoenas.githubusers.adapter.UserAdapter
-import com.yoenas.githubusers.data.User
+import com.yoenas.githubusers.data.model.User
 import com.yoenas.githubusers.databinding.ActivityMainBinding
 import com.yoenas.githubusers.ui.detail.DetailActivity
 import com.yoenas.githubusers.utils.OnItemClickCallback
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
         mainViewModel.getResultSearchUser().observe(this) {
             setUser(it)
             if (it != null) {

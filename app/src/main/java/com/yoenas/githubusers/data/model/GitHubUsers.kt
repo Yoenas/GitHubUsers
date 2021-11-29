@@ -1,4 +1,4 @@
-package com.yoenas.githubusers.data
+package com.yoenas.githubusers.data.model
 
 import com.google.gson.annotations.SerializedName
 
