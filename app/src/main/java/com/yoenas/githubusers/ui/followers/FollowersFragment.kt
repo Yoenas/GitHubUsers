@@ -18,7 +18,7 @@ class FollowersFragment : Fragment() {
 
     private var _binding: FragmentFollowersBinding? = null
 
-    private val binding get() = _binding!!
+    private val binding get() = _binding as FragmentFollowersBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

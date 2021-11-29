@@ -22,10 +22,6 @@ class DetailActivity : AppCompatActivity() {
 
     private var saveDataUser = Bundle()
 
-    companion object {
-        const val EXTRA_DATA_USERNAME = "username"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -137,5 +133,9 @@ class DetailActivity : AppCompatActivity() {
                 tvFollowing.visibility = View.VISIBLE
             }
         }
+    }
+
+    companion object {
+        const val EXTRA_DATA_USERNAME = "username"
     }
 }

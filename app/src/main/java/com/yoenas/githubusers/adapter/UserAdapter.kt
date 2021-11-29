@@ -1,6 +1,5 @@
 package com.yoenas.githubusers.adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -8,10 +7,12 @@ import com.bumptech.glide.Glide
 import com.yoenas.githubusers.R
 import com.yoenas.githubusers.data.User
 import com.yoenas.githubusers.databinding.RowItemUserBinding
-import com.yoenas.githubusers.ui.detail.DetailActivity
+import com.yoenas.githubusers.utils.OnItemClickCallback
 
 class UserAdapter(private val listUser: ArrayList<User>) :
     RecyclerView.Adapter<UserAdapter.MyViewHolder>() {
+
+    private var onItemClicked: OnItemClickCallback? = null
 
     class MyViewHolder(val binding: RowItemUserBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -21,20 +22,24 @@ class UserAdapter(private val listUser: ArrayList<User>) :
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.binding.apply {
-            tvUsername.text = listUser[position].login
-            tvUrl.text = listUser[position].htmlUrl
+            with(listUser[position]) {
+                tvUsername.text = login
+                tvUrl.text = htmlUrl
 
-            // set drawable from uri
-            Glide.with(imgAvatar.context).load(listUser[position].avatarUrl)
-                .error(R.drawable.ic_broken_image_white).into(imgAvatar)
+                // set drawable from uri
+                Glide.with(imgAvatar.context).load(avatarUrl)
+                    .error(R.drawable.ic_broken_image_white).into(imgAvatar)
 
-            cvRowUser.setOnClickListener {
-                val intent = Intent(it.context, DetailActivity::class.java)
-                intent.putExtra(DetailActivity.EXTRA_DATA_USERNAME, listUser[position].login)
-                it.context.startActivity(intent)
+                cvRowUser.setOnClickListener {
+                    onItemClicked?.onItemClicked(this)
+                }
             }
         }
     }
 
     override fun getItemCount() = listUser.size
+
+    fun setOnItemClickCallback(onItemClicked: OnItemClickCallback) {
+        this.onItemClicked = onItemClicked
+    }
 }

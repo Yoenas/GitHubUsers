@@ -2,6 +2,7 @@ package com.yoenas.githubusers.ui.main
 
 import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
@@ -13,6 +14,8 @@ import com.yoenas.githubusers.R
 import com.yoenas.githubusers.adapter.UserAdapter
 import com.yoenas.githubusers.data.User
 import com.yoenas.githubusers.databinding.ActivityMainBinding
+import com.yoenas.githubusers.ui.detail.DetailActivity
+import com.yoenas.githubusers.utils.OnItemClickCallback
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -38,7 +41,15 @@ class MainActivity : AppCompatActivity() {
     private fun setUser(user: ArrayList<User>) {
         binding.rvUser.apply {
             layoutManager = GridLayoutManager(context, 2)
-            adapter = UserAdapter(user)
+            val userAdapter = UserAdapter(user)
+            adapter = userAdapter
+            userAdapter.setOnItemClickCallback(object : OnItemClickCallback {
+                override fun onItemClicked(user: User) {
+                    val intent = Intent(this@MainActivity, DetailActivity::class.java)
+                    intent.putExtra(DetailActivity.EXTRA_DATA_USERNAME, user.login)
+                    startActivity(intent)
+                }
+            })
         }
     }
 

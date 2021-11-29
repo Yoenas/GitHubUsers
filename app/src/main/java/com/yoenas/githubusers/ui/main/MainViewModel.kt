@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.yoenas.githubusers.data.GitHubUsers
 import com.yoenas.githubusers.data.User
-import com.yoenas.githubusers.retrofit2.ApiConfig
+import com.yoenas.githubusers.network.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
