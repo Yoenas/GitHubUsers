@@ -22,8 +22,10 @@
     <string name="txt_search_progress">Please wait! Looking For</string>
     <string name="txt_dialog_information">GitHub users will show up after using\nSearch Person Menu</string>
     <string name="content_button_favorite">Button Favorite</string>
-    <string name="txt_favorite">Favorite</string>
     <string name="txt_dialog_information_favorite">No user is the Favorite.\n\nGo to Detail GitHub User Page,\nuse the love button to add users here.</string>
     <string name="content_img_icon_favorite">Image Icon Favorite</string>
-    <string name="txt_themes_mode">Themes Mode</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="txt_last_search_result">Search Result</string>
+    <string name="txt_favorite_users">Favorite Users</string>
+    <string name="content_image_change_theme">Image For Change Theme Mode</string>
 </resources>

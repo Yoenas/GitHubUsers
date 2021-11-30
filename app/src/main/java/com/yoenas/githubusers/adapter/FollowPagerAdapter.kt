@@ -7,10 +7,10 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.yoenas.githubusers.ui.detail.followers.FollowersFragment
 import com.yoenas.githubusers.ui.detail.following.FollowingFragment
 
-class SectionPagerAdapter(fa: FragmentActivity, bundle: Bundle) :
+class FollowPagerAdapter(fa: FragmentActivity, bundle: Bundle?) :
     FragmentStateAdapter(fa) {
 
-    private var mBundle: Bundle = bundle
+    private var mBundle: Bundle? = bundle
 
     override fun getItemCount(): Int = 2
 

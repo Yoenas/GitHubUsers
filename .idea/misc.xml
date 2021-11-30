@@ -6,6 +6,7 @@
         <entry key="..\:/AndroidStudioProjects/practice/GitHubUsers/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.215625" />
         <entry key="..\:/AndroidStudioProjects/practice/GitHubUsers/app/src/main/res/drawable/bg_dark_primary.xml" value="0.19375" />
         <entry key="..\:/AndroidStudioProjects/practice/GitHubUsers/app/src/main/res/drawable/bg_splash.xml" value="0.21435897435897436" />
+        <entry key="..\:/AndroidStudioProjects/practice/GitHubUsers/app/src/main/res/drawable/btn_img_theme_mode.xml" value="0.19375" />
         <entry key="..\:/AndroidStudioProjects/practice/GitHubUsers/app/src/main/res/drawable/ic_broken_image.xml" value="0.175" />
         <entry key="..\:/AndroidStudioProjects/practice/GitHubUsers/app/src/main/res/drawable/ic_broken_image_dark.xml" value="0.19375" />
         <entry key="..\:/AndroidStudioProjects/practice/GitHubUsers/app/src/main/res/drawable/ic_broken_image_white.xml" value="0.19375" />
@@ -26,10 +27,12 @@
         <entry key="..\:/AndroidStudioProjects/practice/GitHubUsers/app/src/main/res/drawable/splash_screen.xml" value="0.21435897435897436" />
         <entry key="..\:/AndroidStudioProjects/practice/GitHubUsers/app/src/main/res/layout/activity_detail.xml" value="0.25" />
         <entry key="..\:/AndroidStudioProjects/practice/GitHubUsers/app/src/main/res/layout/activity_favorite.xml" value="0.1734375" />
-        <entry key="..\:/AndroidStudioProjects/practice/GitHubUsers/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/AndroidStudioProjects/practice/GitHubUsers/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/AndroidStudioProjects/practice/GitHubUsers/app/src/main/res/layout/activity_splash_screen.xml" value="0.2015625" />
+        <entry key="..\:/AndroidStudioProjects/practice/GitHubUsers/app/src/main/res/layout/fragment_favorite.xml" value="0.1734375" />
         <entry key="..\:/AndroidStudioProjects/practice/GitHubUsers/app/src/main/res/layout/fragment_followers.xml" value="0.1734375" />
         <entry key="..\:/AndroidStudioProjects/practice/GitHubUsers/app/src/main/res/layout/fragment_following.xml" value="0.1734375" />
+        <entry key="..\:/AndroidStudioProjects/practice/GitHubUsers/app/src/main/res/layout/fragment_search_result.xml" value="0.15625" />
         <entry key="..\:/AndroidStudioProjects/practice/GitHubUsers/app/src/main/res/layout/row_item_user.xml" value="0.25" />
         <entry key="..\:/AndroidStudioProjects/practice/GitHubUsers/app/src/main/res/menu/detail_menu.xml" value="0.1734375" />
         <entry key="..\:/AndroidStudioProjects/practice/GitHubUsers/app/src/main/res/menu/main_menu.xml" value="0.19" />

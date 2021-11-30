@@ -226,7 +226,7 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:backgroundTint="@color/dark_primary"
+            android:backgroundTint="@color/primary"
             app:layout_constraintTop_toTopOf="parent"
             app:tabIndicatorColor="@color/white"
             app:tabSelectedTextColor="@color/white"

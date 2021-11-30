@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.favorite.FavoriteActivity">
+    tools:context=".ui.main.favorite.FavoriteFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_favorite"
@@ -15,9 +15,9 @@
 
     <TextView
         android:id="@+id/tv_dialog_information"
+        style="@style/TextDialogInformation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/TextDialogInformation"
         android:text="@string/txt_dialog_information_favorite"
         android:textAlignment="center"
         android:textSize="18sp"
@@ -27,15 +27,16 @@
 
     <ImageView
         android:id="@+id/img_dialog_information"
+        style="@style/ImageTintTheme"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
         android:contentDescription="@string/content_img_icon_favorite"
         android:src="@drawable/ic_favorite_full"
-        style="@style/ImageTintTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_dialog_information"
         app:tint="@color/light_primary" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

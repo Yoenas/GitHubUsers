@@ -1,4 +1,4 @@
-package com.yoenas.githubusers.ui.favorite
+package com.yoenas.githubusers.ui.main.favorite
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData

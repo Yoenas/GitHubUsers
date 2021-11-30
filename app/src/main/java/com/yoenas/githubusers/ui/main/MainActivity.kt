@@ -1,25 +1,14 @@
 package com.yoenas.githubusers.ui.main
 
-import android.app.SearchManager
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.tabs.TabLayoutMediator
 import com.yoenas.githubusers.R
-import com.yoenas.githubusers.adapter.UserAdapter
-import com.yoenas.githubusers.data.model.User
+import com.yoenas.githubusers.adapter.MainSectionPagerAdapter
 import com.yoenas.githubusers.databinding.ActivityMainBinding
 import com.yoenas.githubusers.di.ViewModelFactory
-import com.yoenas.githubusers.ui.detail.DetailActivity
-import com.yoenas.githubusers.ui.favorite.FavoriteActivity
-import com.yoenas.githubusers.utils.OnItemClickCallback
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -34,23 +23,44 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
 
         mainViewModel = obtainViewModel(this)
         mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
-        mainViewModel.getResultSearchUser().observe(this) {
-            setUser(it)
-            if (it != null) {
-                showLoading(false, null)
-            }
-        }
-
         mainViewModel.getThemeSettings().observe(this) {
             if (it) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 this.isDarkModeActive = true
+                binding.btnImgThemeMenu.setImageResource(R.drawable.ic_dark_mode)
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 this.isDarkModeActive = false
+                binding.btnImgThemeMenu.setImageResource(R.drawable.ic_light_mode)
+            }
+        }
+
+        iniView()
+    }
+
+    private fun iniView() {
+        binding.apply {
+            vpMain.adapter = MainSectionPagerAdapter(this@MainActivity)
+
+            val tabList = arrayOf(
+                getString(R.string.txt_last_search_result),
+                getString(R.string.txt_favorite_users)
+            )
+            TabLayoutMediator(tabs, vpMain) { tabs, position ->
+                tabs.text = tabList[position]
+            }.attach()
+
+            btnImgThemeMenu.setOnClickListener {
+                mainViewModel.saveThemeSetting(!isDarkModeActive)
+                if (!isDarkModeActive) {
+                    btnImgThemeMenu.setImageResource(R.drawable.ic_dark_mode)
+                } else {
+                    btnImgThemeMenu.setImageResource(R.drawable.ic_light_mode)
+                }
             }
         }
     }
@@ -58,96 +68,5 @@ class MainActivity : AppCompatActivity() {
     private fun obtainViewModel(activity: AppCompatActivity): MainViewModel {
         val factory = ViewModelFactory.getInstance(activity.application)
         return ViewModelProvider(activity, factory)[MainViewModel::class.java]
-    }
-
-    private fun setUser(user: ArrayList<User>) {
-        binding.rvUser.apply {
-            layoutManager = GridLayoutManager(context, 2)
-            val userAdapter = UserAdapter(user)
-            adapter = userAdapter
-            userAdapter.setOnItemClickCallback(object : OnItemClickCallback {
-                override fun onItemClicked(user: User) {
-                    val intent = Intent(this@MainActivity, DetailActivity::class.java)
-                    intent.putExtra(DetailActivity.EXTRA_DATA_USERNAME, user.login)
-                    startActivity(intent)
-                }
-            })
-        }
-    }
-
-    private fun showLoading(loading: Boolean, username: String?) {
-        binding.apply {
-            if (loading) {
-                tvDialogInformation.visibility = View.GONE
-                imgDialogInformation.visibility = View.GONE
-                progressBar.visibility = View.VISIBLE
-                tvSearchProgress.visibility = View.VISIBLE
-                tvSearchQuery.text = username
-                tvSearchQuery.visibility = View.VISIBLE
-                rvUser.visibility = View.GONE
-            } else {
-                tvDialogInformation.visibility = View.GONE
-                imgDialogInformation.visibility = View.GONE
-                progressBar.visibility = View.GONE
-                tvSearchProgress.visibility = View.GONE
-                tvSearchQuery.visibility = View.GONE
-                rvUser.visibility = View.VISIBLE
-            }
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_menu, menu)
-        menuInflater.inflate(R.menu.setting_menu, menu)
-
-        val themeMode = menu?.findItem(R.id.action_theme)
-        if (!isDarkModeActive) {
-            themeMode?.setIcon(R.drawable.ic_dark_mode)
-        } else {
-            themeMode?.setIcon(R.drawable.ic_light_mode)
-        }
-        
-        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val searchView = menu?.findItem(R.id.action_search)?.actionView as SearchView
-
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
-        searchView.queryHint = resources.getString(R.string.txt_type_the_username)
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                searchUserByQuery(query)
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                searchUserByQuery(newText)
-                return true
-            }
-
-        })
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    private fun searchUserByQuery(query: String?) {
-        if (query?.isEmpty() == true) {
-            showLoading(false, null)
-        } else {
-            query?.let { mainViewModel.searchUser(it) }
-            showLoading(true, query)
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_favorite -> startActivity(Intent(this, FavoriteActivity::class.java))
-            R.id.action_theme -> {
-                mainViewModel.saveThemeSetting(!isDarkModeActive)
-                if (!isDarkModeActive) {
-                    item.setIcon(R.drawable.ic_dark_mode)
-                } else {
-                    item.setIcon(R.drawable.ic_light_mode)
-                }
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 }

@@ -40,4 +40,15 @@
         <item name="android:paddingEnd">32dp</item>
         <item name="android:textColor">@color/light_primary</item>
     </style>
+
+    <style name="Theme.GitHubUsers.NoActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
+
+    <style name="ToolbarTheme">
+        <item name="android:background">@color/primary</item>
+        <item name="tint">@color/white</item>
+        <item name="colorControlNormal">@color/white</item>
+    </style>
 </resources>

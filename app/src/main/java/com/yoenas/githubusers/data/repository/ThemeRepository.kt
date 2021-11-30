@@ -1,6 +1,5 @@
 package com.yoenas.githubusers.data.repository
 
-import android.app.Application
 import android.content.Context
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
@@ -14,13 +13,13 @@ class ThemeRepository(context: Context) {
     private val settingDataStore = context.dataStore
 
     fun getThemeSetting(): Flow<Boolean> {
-        return settingDataStore.data.map { it ->
+        return settingDataStore.data.map {
             it[key] ?: false
         }
     }
 
     suspend fun saveThemeSetting(isDarkMode: Boolean) {
-        settingDataStore.edit { it ->
+        settingDataStore.edit {
             it[key] = isDarkMode
         }
     }

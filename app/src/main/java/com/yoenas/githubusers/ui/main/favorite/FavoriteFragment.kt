@@ -1,35 +1,65 @@
-package com.yoenas.githubusers.ui.favorite
+package com.yoenas.githubusers.ui.main.favorite
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.yoenas.githubusers.R
 import com.yoenas.githubusers.adapter.UserAdapter
 import com.yoenas.githubusers.data.model.DetailUser
 import com.yoenas.githubusers.data.model.User
-import com.yoenas.githubusers.databinding.ActivityFavoriteBinding
-import com.yoenas.githubusers.ui.detail.DetailActivity
+import com.yoenas.githubusers.databinding.FragmentFavoriteBinding
 import com.yoenas.githubusers.di.ViewModelFactory
+import com.yoenas.githubusers.ui.detail.DetailActivity
 import com.yoenas.githubusers.utils.OnItemClickCallback
 import java.util.*
 
-class FavoriteActivity : AppCompatActivity() {
+class FavoriteFragment : Fragment() {
 
-    private lateinit var binding: ActivityFavoriteBinding
     private lateinit var favoriteViewModel: FavoriteViewModel
+
+    private var _binding: FragmentFavoriteBinding? = null
+
+    private val binding get() = _binding as FragmentFavoriteBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
-        binding = ActivityFavoriteBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
+        inflater.inflate(R.menu.main_menu, menu)
 
-        favoriteViewModel = obtainViewModel(this)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentFavoriteBinding.inflate(layoutInflater)
+        favoriteViewModel = obtainViewModel(activity as AppCompatActivity)
+        return binding.root
+    }
+
+    private fun obtainViewModel(activity: AppCompatActivity): FavoriteViewModel {
+        val factory = ViewModelFactory.getInstance(activity.application)
+        return ViewModelProvider(activity, factory)[FavoriteViewModel::class.java]
+    }
+
+    override fun onResume() {
+        super.onResume()
         favoriteViewModel.getFavoriteUsers()
-        favoriteViewModel.favoriteUsers.observe(this) {
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        favoriteViewModel.getFavoriteUsers()
+        favoriteViewModel.favoriteUsers.observe(viewLifecycleOwner) {
             if (it?.isEmpty() != true) {
                 it?.let { it1 -> setFavoriteUsers(it1) }
             } else {
@@ -46,12 +76,12 @@ class FavoriteActivity : AppCompatActivity() {
             imgDialogInformation.visibility = View.GONE
             rvFavorite.visibility = View.VISIBLE
             with(rvFavorite) {
-                layoutManager = GridLayoutManager(applicationContext, 2)
+                layoutManager = GridLayoutManager(context, 2)
                 val listFavoriteUsers = mapList(user)
                 val favoriteUsersAdapter = UserAdapter(listFavoriteUsers)
                 favoriteUsersAdapter.setOnItemClickCallback(object : OnItemClickCallback {
                     override fun onItemClicked(user: User) {
-                        val intent = Intent(applicationContext, DetailActivity::class.java)
+                        val intent = Intent(context, DetailActivity::class.java)
                         intent.putExtra(DetailActivity.EXTRA_DATA_USERNAME, user.login)
                         startActivity(intent)
                     }
@@ -70,18 +100,8 @@ class FavoriteActivity : AppCompatActivity() {
         return userList
     }
 
-    private fun obtainViewModel(activity: AppCompatActivity): FavoriteViewModel {
-        val factory = ViewModelFactory.getInstance(activity.application)
-        return ViewModelProvider(activity, factory)[FavoriteViewModel::class.java]
-    }
-
-    override fun onResume() {
-        super.onResume()
-        favoriteViewModel.getFavoriteUsers()
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return super.onSupportNavigateUp()
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

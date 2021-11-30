@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
 import com.yoenas.githubusers.R
-import com.yoenas.githubusers.adapter.SectionPagerAdapter
+import com.yoenas.githubusers.adapter.FollowPagerAdapter
 import com.yoenas.githubusers.data.model.DetailUser
 import com.yoenas.githubusers.databinding.ActivityDetailBinding
 import com.yoenas.githubusers.di.ViewModelFactory
@@ -82,7 +82,7 @@ class DetailActivity : AppCompatActivity() {
                 }
             })
 
-            vpFollow.adapter = SectionPagerAdapter(this@DetailActivity, saveDataUser)
+            vpFollow.adapter = FollowPagerAdapter(this@DetailActivity, saveDataUser)
             TabLayoutMediator(tabs, vpFollow) { tab, position ->
                 tab.text = tabList[position]
             }.attach()
