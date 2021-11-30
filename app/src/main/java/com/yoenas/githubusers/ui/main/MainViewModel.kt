@@ -6,10 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.yoenas.githubusers.data.repository.ThemeRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel(application: Application) : ViewModel() {
-    private val themeRepository: ThemeRepository = ThemeRepository(application)
+@HiltViewModel
+class MainViewModel @Inject constructor(private val themeRepository: ThemeRepository) :
+    ViewModel() {
 
     fun saveThemeSetting(isDarkModeActive: Boolean) {
         viewModelScope.launch {

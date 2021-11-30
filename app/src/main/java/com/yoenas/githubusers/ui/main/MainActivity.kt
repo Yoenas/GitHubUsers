@@ -9,8 +9,10 @@ import com.yoenas.githubusers.R
 import com.yoenas.githubusers.adapter.MainSectionPagerAdapter
 import com.yoenas.githubusers.databinding.ActivityMainBinding
 import com.yoenas.githubusers.di.ViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -25,7 +27,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
-        mainViewModel = obtainViewModel(this)
         mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
         mainViewModel.getThemeSettings().observe(this) {
             if (it) {
@@ -63,10 +64,5 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    private fun obtainViewModel(activity: AppCompatActivity): MainViewModel {
-        val factory = ViewModelFactory.getInstance(activity.application)
-        return ViewModelProvider(activity, factory)[MainViewModel::class.java]
     }
 }

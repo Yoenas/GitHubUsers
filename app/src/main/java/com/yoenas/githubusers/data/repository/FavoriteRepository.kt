@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.flowOn
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-
 class FavoriteRepository(application: Application) {
     private val favoriteDao: FavoriteDao
     private val executorService: ExecutorService = Executors.newSingleThreadExecutor()
