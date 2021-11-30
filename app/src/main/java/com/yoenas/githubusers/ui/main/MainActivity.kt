@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -15,6 +16,7 @@ import com.yoenas.githubusers.R
 import com.yoenas.githubusers.adapter.UserAdapter
 import com.yoenas.githubusers.data.model.User
 import com.yoenas.githubusers.databinding.ActivityMainBinding
+import com.yoenas.githubusers.di.ViewModelFactory
 import com.yoenas.githubusers.ui.detail.DetailActivity
 import com.yoenas.githubusers.ui.favorite.FavoriteActivity
 import com.yoenas.githubusers.utils.OnItemClickCallback
@@ -25,12 +27,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var mainViewModel: MainViewModel
 
+    private var isDarkModeActive: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        mainViewModel = obtainViewModel(this)
         mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
         mainViewModel.getResultSearchUser().observe(this) {
             setUser(it)
@@ -38,6 +43,21 @@ class MainActivity : AppCompatActivity() {
                 showLoading(false, null)
             }
         }
+
+        mainViewModel.getThemeSettings().observe(this) {
+            if (it) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                this.isDarkModeActive = true
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                this.isDarkModeActive = false
+            }
+        }
+    }
+
+    private fun obtainViewModel(activity: AppCompatActivity): MainViewModel {
+        val factory = ViewModelFactory.getInstance(activity.application)
+        return ViewModelProvider(activity, factory)[MainViewModel::class.java]
     }
 
     private fun setUser(user: ArrayList<User>) {
@@ -78,7 +98,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
+        menuInflater.inflate(R.menu.setting_menu, menu)
 
+        val themeMode = menu?.findItem(R.id.action_theme)
+        if (!isDarkModeActive) {
+            themeMode?.setIcon(R.drawable.ic_dark_mode)
+        } else {
+            themeMode?.setIcon(R.drawable.ic_light_mode)
+        }
+        
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchView = menu?.findItem(R.id.action_search)?.actionView as SearchView
 
@@ -96,7 +124,6 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
-
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -112,6 +139,14 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_favorite -> startActivity(Intent(this, FavoriteActivity::class.java))
+            R.id.action_theme -> {
+                mainViewModel.saveThemeSetting(!isDarkModeActive)
+                if (!isDarkModeActive) {
+                    item.setIcon(R.drawable.ic_dark_mode)
+                } else {
+                    item.setIcon(R.drawable.ic_light_mode)
+                }
+            }
         }
         return super.onOptionsItemSelected(item)
     }

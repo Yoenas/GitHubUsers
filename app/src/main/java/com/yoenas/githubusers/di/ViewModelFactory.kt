@@ -1,9 +1,11 @@
-package com.yoenas.githubusers.ui.detail
+package com.yoenas.githubusers.di
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.yoenas.githubusers.ui.detail.DetailViewModel
 import com.yoenas.githubusers.ui.favorite.FavoriteViewModel
+import com.yoenas.githubusers.ui.main.MainViewModel
 
 class ViewModelFactory private constructor(private val mApplication: Application) :
     ViewModelProvider.NewInstanceFactory() {
@@ -28,6 +30,8 @@ class ViewModelFactory private constructor(private val mApplication: Application
             return DetailViewModel(mApplication) as T
         } else if (modelClass.isAssignableFrom(FavoriteViewModel::class.java)) {
             return FavoriteViewModel(mApplication) as T
+        } else if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
+            return MainViewModel(mApplication) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
     }

@@ -15,7 +15,7 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
+            android:theme="@style/CollapseToolbarTheme"
             app:contentScrim="@color/white"
             app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
 
@@ -41,11 +41,11 @@
 
                 <TextView
                     android:id="@+id/tv_name_detail"
+                    style="@style/TextContentDetail"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:textAlignment="center"
-                    android:textColor="@color/dark_primary"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -170,6 +170,7 @@
 
                 <ImageView
                     android:id="@+id/img_company"
+                    style="@style/ImageTintTheme"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:contentDescription="@string/content_img_company"
@@ -180,6 +181,7 @@
 
                 <ImageView
                     android:id="@+id/img_location"
+                    style="@style/ImageTintTheme"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:contentDescription="@string/content_img_location"
@@ -190,6 +192,7 @@
 
                 <ImageView
                     android:id="@+id/img_repo"
+                    style="@style/ImageTintTheme"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:contentDescription="@string/content_img_repositories"
@@ -200,6 +203,7 @@
 
                 <ImageView
                     android:id="@+id/img_follow"
+                    style="@style/ImageTintTheme"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:contentDescription="@string/content_img_follow"

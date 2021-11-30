@@ -11,7 +11,7 @@ import com.yoenas.githubusers.data.model.DetailUser
 import com.yoenas.githubusers.data.model.User
 import com.yoenas.githubusers.databinding.ActivityFavoriteBinding
 import com.yoenas.githubusers.ui.detail.DetailActivity
-import com.yoenas.githubusers.ui.detail.ViewModelFactory
+import com.yoenas.githubusers.di.ViewModelFactory
 import com.yoenas.githubusers.utils.OnItemClickCallback
 import java.util.*
 
@@ -25,12 +25,13 @@ class FavoriteActivity : AppCompatActivity() {
 
         binding = ActivityFavoriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         favoriteViewModel = obtainViewModel(this)
         favoriteViewModel.getFavoriteUsers()
         favoriteViewModel.favoriteUsers.observe(this) {
-            if (it != null) {
-                setFavoriteUsers(it)
+            if (it?.isEmpty() != true) {
+                it?.let { it1 -> setFavoriteUsers(it1) }
             } else {
                 binding.tvDialogInformation.visibility = View.VISIBLE
                 binding.imgDialogInformation.visibility = View.VISIBLE
@@ -72,5 +73,15 @@ class FavoriteActivity : AppCompatActivity() {
     private fun obtainViewModel(activity: AppCompatActivity): FavoriteViewModel {
         val factory = ViewModelFactory.getInstance(activity.application)
         return ViewModelProvider(activity, factory)[FavoriteViewModel::class.java]
+    }
+
+    override fun onResume() {
+        super.onResume()
+        favoriteViewModel.getFavoriteUsers()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
     }
 }

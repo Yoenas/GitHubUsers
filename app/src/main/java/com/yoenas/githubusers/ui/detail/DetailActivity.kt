@@ -13,6 +13,7 @@ import com.yoenas.githubusers.R
 import com.yoenas.githubusers.adapter.SectionPagerAdapter
 import com.yoenas.githubusers.data.model.DetailUser
 import com.yoenas.githubusers.databinding.ActivityDetailBinding
+import com.yoenas.githubusers.di.ViewModelFactory
 
 class DetailActivity : AppCompatActivity() {
 
