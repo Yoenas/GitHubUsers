@@ -8,7 +8,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.yoenas.githubusers.R
 import com.yoenas.githubusers.adapter.MainSectionPagerAdapter
 import com.yoenas.githubusers.databinding.ActivityMainBinding
-import com.yoenas.githubusers.di.ViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
