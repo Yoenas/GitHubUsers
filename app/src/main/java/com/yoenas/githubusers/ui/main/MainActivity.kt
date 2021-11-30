@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -15,6 +16,7 @@ import com.yoenas.githubusers.adapter.UserAdapter
 import com.yoenas.githubusers.data.model.User
 import com.yoenas.githubusers.databinding.ActivityMainBinding
 import com.yoenas.githubusers.ui.detail.DetailActivity
+import com.yoenas.githubusers.ui.favorite.FavoriteActivity
 import com.yoenas.githubusers.utils.OnItemClickCallback
 import java.util.*
 
@@ -107,4 +109,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_favorite -> startActivity(Intent(this, FavoriteActivity::class.java))
+        }
+        return super.onOptionsItemSelected(item)
+    }
 }

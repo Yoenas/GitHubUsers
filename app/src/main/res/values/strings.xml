@@ -22,4 +22,7 @@
     <string name="txt_search_progress">Please wait! Looking For</string>
     <string name="txt_dialog_information">GitHub users will show up after using\nSearch Person Menu</string>
     <string name="content_button_favorite">Button Favorite</string>
+    <string name="txt_favorite">Favorite</string>
+    <string name="txt_dialog_information_favorite">No user is the Favorite.\nUse the icon to add users here.</string>
+    <string name="content_img_icon_favorite">Image Icon Favorite</string>
 </resources>
