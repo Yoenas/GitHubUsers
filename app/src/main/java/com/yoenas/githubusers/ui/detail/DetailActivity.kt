@@ -16,16 +16,21 @@ import com.yoenas.githubusers.databinding.ActivityDetailBinding
 
 class DetailActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityDetailBinding
-    private lateinit var detailViewModel: DetailViewModel
-    private lateinit var dataUser: DetailUser
+    private var _binding: ActivityDetailBinding? = null
+    private val binding get() = _binding as ActivityDetailBinding
+
+    private var _detailViewModel: DetailViewModel? = null
+    private val detailViewModel get() = _detailViewModel as DetailViewModel
+
+    private var _dataUser: DetailUser? = null
+    private val dataUser get() = _dataUser as DetailUser
 
     private var saveDataUser = Bundle()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityDetailBinding.inflate(layoutInflater)
+        _binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
@@ -36,10 +41,10 @@ class DetailActivity : AppCompatActivity() {
 
         saveDataUser.putString(EXTRA_DATA_USERNAME, username)
 
-        detailViewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
+        _detailViewModel = ViewModelProvider(this)[DetailViewModel::class.java]
         detailViewModel.getUser(username!!)
         detailViewModel.getUserDetails().observe(this) {
-            this.dataUser = it
+            _dataUser = it
             showLoading(true)
             if (it != null) {
                 initView()
@@ -78,7 +83,7 @@ class DetailActivity : AppCompatActivity() {
         return super.onSupportNavigateUp()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.detail_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }

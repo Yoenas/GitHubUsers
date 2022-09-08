@@ -13,11 +13,13 @@ import com.yoenas.githubusers.ui.detail.DetailActivity
 
 class FollowingFragment : Fragment() {
 
-    private lateinit var followingViewModel: FollowingViewModel
-    private lateinit var username: String
+    private var _followingViewModel: FollowingViewModel? = null
+    private val followingViewModel get() = _followingViewModel as FollowingViewModel
+
+    private var _username: String? = null
+    private val username get() = _username as String
 
     private var _binding: FragmentFollowingBinding? = null
-
     private val binding get() = _binding as FragmentFollowingBinding
 
     override fun onCreateView(
@@ -25,18 +27,18 @@ class FollowingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFollowingBinding.inflate(layoutInflater)
-        followingViewModel = ViewModelProvider(this).get(FollowingViewModel::class.java)
-        username = arguments?.getString(DetailActivity.EXTRA_DATA_USERNAME).toString()
-
-        showLoading(true)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        _followingViewModel = ViewModelProvider(this)[FollowingViewModel::class.java]
+        _username = arguments?.getString(DetailActivity.EXTRA_DATA_USERNAME).toString()
+        showLoading(true)
+
         followingViewModel.getUserFollowing(username)
-        followingViewModel.getResultFollowing().observe(viewLifecycleOwner, {
+        followingViewModel.getResultFollowing().observe(viewLifecycleOwner) {
             if (it != null) {
                 binding.rvFollowing.apply {
                     layoutManager = LinearLayoutManager(activity)
@@ -44,7 +46,7 @@ class FollowingFragment : Fragment() {
                     showLoading(false)
                 }
             }
-        })
+        }
     }
 
     override fun onDestroyView() {

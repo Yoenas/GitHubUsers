@@ -16,20 +16,22 @@ import com.yoenas.githubusers.data.User
 import com.yoenas.githubusers.databinding.ActivityMainBinding
 import com.yoenas.githubusers.ui.detail.DetailActivity
 import com.yoenas.githubusers.utils.OnItemClickCallback
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
-    private lateinit var mainViewModel: MainViewModel
+    private var _binding: ActivityMainBinding? = null
+    private val binding get() = _binding as ActivityMainBinding
+
+    private var _mainViewModel: MainViewModel? = null
+    private val mainViewModel get() = _mainViewModel as MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        _mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
         mainViewModel.getResultSearchUser().observe(this) {
             setUser(it)
             if (it != null) {
@@ -74,11 +76,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
 
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val searchView = menu?.findItem(R.id.action_search)?.actionView as SearchView
+        val searchView = menu.findItem(R.id.action_search)?.actionView as SearchView
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
         searchView.queryHint = resources.getString(R.string.txt_type_the_username)
@@ -92,9 +94,7 @@ class MainActivity : AppCompatActivity() {
                 searchUserByQuery(newText)
                 return true
             }
-
         })
-
         return super.onCreateOptionsMenu(menu)
     }
 
