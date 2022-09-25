@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.view.Menu
 import android.view.MenuItem
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
@@ -33,23 +32,11 @@ class DetailActivity : AppCompatActivity() {
 
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        supportActionBar?.apply {
-            setDisplayHomeAsUpEnabled(true)
-            title = getString(R.string.txt_title_detail)
-        }
+        supportActionBar?.title = getString(R.string.txt_title_detail)
 
         dataUser = intent.parcelable(EXTRA_DATA_USER)
 
         initView()
-
-        onBackPressedDispatcher.addCallback(
-            this /* lifecycle owner */,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    // Back is pressed... Finishing the activity
-                    finish()
-                }
-            })
     }
 
     @SuppressLint("DiscouragedApi")
