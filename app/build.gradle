@@ -53,4 +53,7 @@ dependencies {
     // Load Image - Glide
     implementation 'com.github.bumptech.glide:glide:4.13.0'
     kapt 'com.github.bumptech.glide:compiler:4.13.0'
+
+    // To replace onBackpressed which deprecated
+    implementation 'androidx.appcompat:appcompat:1.6.0-rc01'
 }
